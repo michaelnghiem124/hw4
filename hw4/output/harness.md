@@ -873,3 +873,43 @@ A 7-section suite run from the backend venv, plus live browser checks. Every ite
 - **Live UI:** guest chat on a product page returned correct per-size stock with a card and no
   console errors; a signed-in session replayed 7 saved messages; a pre-Problem-12 tokenless
   session correctly fell back to guest and cleared itself.
+
+---
+
+## Publishing guardrails (Problem 13)
+
+The repo is public: **https://github.com/michaelnghiem124/hw4**. That changes what this document
+itself is allowed to contain, so the rules below are part of the harness, not packaging notes.
+
+### What must never be committed, and why it is layered
+
+| Excluded | Reason |
+| --- | --- |
+| `data/campus_customs.db` | Holds real email addresses (two belong to actual people) and salted password hashes |
+| `data/products/`, `data/Handsome Dan.jpeg` | Course-supplied photography — not mine to redistribute |
+| `.env` | The Anthropic API key. It lives in `~/.config/mgt409/`, outside the repo entirely |
+| `backend/.session_secret` | HMAC key for session tokens; a leak forges any shopper's session |
+| `.venv/`, `node_modules/` | Build artefacts |
+
+The root `.gitignore` is an **allowlist** — it ignores `/*` and allows `/hw4/` back in — because
+the working folder also contains `hw1`, `hw2` and `my-app`. A blocklist naming those three would
+let a folder added next month escape silently. `hw4/.gitignore` repeats the data and secret rules
+so the folder stays safe if cloned on its own, and adds a tree-wide `*.db` rule. That redundancy
+paid for itself immediately: a stray copy of `campus_customs.db` was sitting in `hw4/` itself,
+outside `data/`, where a `data/`-only rule would have missed it.
+
+### This document is now a published artefact
+
+`harness.md` previously carried a table of the three seeded accounts with their email addresses,
+including the course instructor's. That was fine in a private folder and is not fine on a public
+repo. The addresses are gone; the roles and the reasoning stay, which is all a reader needs. The
+same applies to the seeded test account's password, which `AI_prompts.md` had printed next to its
+address.
+
+**The standing rule:** before anything is pushed, `harness.md`, `AI_prompts.md`, `app_check.html`
+and `audit_trail.json` get scanned for addresses, hashes and keys — and the screenshots get
+checked for a signed-in customer name, since a name in a PNG is not something grep will find. The
+audit trail passed because the Problem 12 redaction already removed PII at write time; the
+screenshots passed because every capture was made as a guest.
+
+A document that quotes the database is only as private as the repo it sits in.

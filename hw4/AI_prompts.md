@@ -797,7 +797,68 @@ both counts with zero tool calls.
 
 ---
 
+## Problem 13 — Push to GitHub, with the data pack and all secrets/PII kept out
+
+**Prompt (verbatim):**
+
+> Publish this to GitHub and note the expected file layout, as well as ensuring that we don't
+> publish any secrets or PII into ghetto, make sure that we use the get ignore for the data, for
+> example all of the images of the sweatshirts, et cetera. we don't want that published on the
+> Internet, specifically in my ghetto note the local only data pack that shouldn't be in github
+
+*(Sent with the two assignment panels for Problem 13 — the expected `hw4/` file layout, and the
+local-only `data/` pack that must not be in git. "ghetto" is dictation for "GitHub".)*
+
+**Outcome:** published to **https://github.com/michaelnghiem124/hw4** — 55 files, one commit,
+nothing sensitive in it.
+
+**I audited before publishing, not after, and it caught real PII.** `output/harness.md` carried a
+table of the three seeded accounts including **the course instructor's real email address**, and
+both `harness.md` and `AI_prompts.md` printed a working `email / password` pair for the seeded
+test account. On a public repo that is exactly the thing the prompt asked to prevent. All of it
+was replaced with role descriptions ("Professor account — the course instructor's real address;
+treat as PII") that keep the documentation useful without reproducing the addresses. Also
+scanned and cleared: no `sk-ant-` key anywhere (the two matches are prose describing the
+redaction test), no real password hash (the one match is the literal format template
+`pbkdf2_sha256$salt$hash`), no `.env` in the tree at all — the key lives in `~/.config/mgt409/`
+— and the only email left is the `you@yale.edu` placeholder in the login form.
+
+**`output/audit_trail.json` was checked before being published,** since it is a log and logs are
+where PII leaks. All 43 events are guest runs: zero emails, zero hashes, zero `user_id` values.
+The Problem 12 redaction worked. The seven screenshots were checked too — every one shows
+"Chatting as a guest" with the nav reading LOGIN, so no customer name is visible.
+
+**`data-2/` was renamed to `data/`** to match the layout in the brief. A grader placing the
+supplied pack at `hw4/data/` would otherwise have hit a silently broken app. Only two code lines
+referenced it (`backend/main.py`, `backend/agent.py`); current-state docs were updated, and the
+historical entries above were left saying `data-2` because that is what they were written
+against.
+
+**The .gitignore is an allowlist at the root, not a blocklist.** The working folder also holds
+`hw1`, `hw2` and `my-app`, none of which belong in this submission. Listing them would mean a
+folder added later silently escapes, so the root ignores `/*` and allows `/hw4/` back in.
+`hw4/.gitignore` then repeats the data/secret rules so the folder is still safe if cloned alone.
+That second layer earned itself immediately: a **stray copy of `campus_customs.db` was sitting in
+`hw4/` itself**, outside `data/`, which a `data/`-only rule would have missed — the `*.db` rule
+catches it. Verified with `git check-ignore` on all twelve sensitive paths, then re-verified
+against the GitHub API after pushing: 55 files live, zero matching `.db`, `data/`, `.jpg`,
+`node_modules`, `.venv` or `session_secret`.
+
+**New files:** `hw4/README.md` (what the local-only data pack is, why it is excluded, and how to
+run front and back after placing it), `hw4/.env.example` (placeholders only),
+`hw4/requirements.txt`, `hw4/.gitignore`, root `.gitignore`.
+
+**Verification:** backend restarted against the renamed path — `/api/products`,
+`/api/products/{id}` and `/static/...` all 200, and a live chat returned the correct Boola Boola
+stock (XL 2 left, L sold out). Frontend `npx tsc --noEmit` clean; `/products` rendered 102 items
+with **103/103 images loaded, 0 broken**. The console errors visible in the dev server were stale
+`BulldogMark` HMR entries buffered from an old session — the count did not move after a reload
+and no such symbol exists in `src/`. Git identity was set **repo-local only**; the global config
+was left untouched.
+
+---
+
 <!--
-Sections for Problems 13..N are appended below as each problem is worked.
+Sections for Problems 14..N are appended below as each problem is worked.
 One problem at a time — do not pre-fill.
 -->
