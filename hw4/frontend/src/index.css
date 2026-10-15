@@ -1,0 +1,1565 @@
+/* =========================================================================
+   Campus Customs — Ivy heritage design system
+   -------------------------------------------------------------------------
+   Two reference points, deliberately blended:
+     · yaleclubnyc.org  — cinematic dark hero, wide-tracked condensed caps,
+                          overlapping offset panels, motion on scroll.
+     · jpress.com       — retail restraint: paper-white canvas, burgundy,
+                          generous vertical rhythm, framed product imagery.
+   The club site is a members' club; this is a store. So the drama lives in
+   the hero and the editorial bands, and the shopping surfaces stay calm.
+   ========================================================================= */
+
+:root {
+  /* --- Heritage palette --- */
+  --yale-blue: #00356b;
+  --yale-blue-dark: #001f41;
+  --yale-blue-deep: #00152c; /* cinematic hero floor */
+  --yale-blue-light: #eaf0f8;
+  --burgundy: #56112a; /* J.Press wine */
+  --burgundy-dark: #3d0b1d;
+  --brass: #c8a951; /* Ivy brass / varsity gold */
+  --brass-light: #e4cf92;
+  --ivy: #1f4733;
+
+  --ink: #14171c;
+  --muted: #5d6671;
+  --line: #ddd8cd;
+  --line-strong: #c3bcad;
+  --paper: #faf8f3; /* warm retail canvas */
+  --paper-dim: #f2eee4;
+  --white: #ffffff;
+
+  --danger: #a3242c;
+  --success: #2f6b45;
+
+  /* --- Type --- */
+  --font-display: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  --font-label: 'Oswald', 'Jost', system-ui, sans-serif; /* condensed caps */
+  --font-body: 'Jost', system-ui, -apple-system, sans-serif;
+
+  --track-wide: 0.18em;
+  --track-xwide: 0.3em;
+
+  /* --- Depth & rhythm --- */
+  --shadow-sm: 0 1px 2px rgba(20, 23, 28, 0.06), 0 6px 18px rgba(20, 23, 28, 0.05);
+  --shadow-md: 0 2px 6px rgba(20, 23, 28, 0.08), 0 18px 44px rgba(20, 23, 28, 0.12);
+  --shadow-hero: 0 40px 90px rgba(0, 21, 44, 0.45);
+  --radius: 2px; /* heritage retail = near-square corners */
+  --radius-pill: 999px;
+  --band: clamp(64px, 8vw, 116px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  display: block;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--yale-blue-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- Type -- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--yale-blue);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+}
+
+h2 {
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+}
+
+h3 {
+  font-size: 1.15rem;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--muted);
+}
+
+a {
+  color: var(--burgundy);
+  text-underline-offset: 3px;
+}
+
+/* The collegiate eyebrow — the single most load-bearing type style here.
+   Mirrors the club site's interstate-condensed caps and J.Press's Sackers. */
+.eyebrow {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: var(--track-xwide);
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 14px;
+}
+
+.eyebrow-dark {
+  color: var(--burgundy);
+}
+
+/* A hairline rule with a diamond, used to separate editorial bands. */
+.rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 22px;
+  max-width: 180px;
+  color: var(--line-strong);
+}
+
+.rule::before,
+.rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+
+.rule span {
+  width: 6px;
+  height: 6px;
+  background: var(--brass);
+  transform: rotate(45deg);
+}
+
+/* ------------------------------------------------------------- Buttons -- */
+
+button,
+.btn {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 15px 34px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.btn-primary {
+  background: var(--burgundy);
+  color: var(--white);
+  border-color: var(--burgundy);
+}
+
+.btn-primary:hover {
+  background: var(--burgundy-dark);
+  border-color: var(--burgundy-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--yale-blue-dark);
+  border-color: var(--white);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--yale-blue);
+  border-color: var(--line-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--yale-blue);
+  color: var(--white);
+  border-color: var(--yale-blue);
+}
+
+/* A text link that underlines on hover, brass rule beneath. */
+.link-rule {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--yale-blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 3px;
+  transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+
+.link-rule:hover {
+  color: var(--burgundy);
+  border-color: var(--burgundy);
+}
+
+/* -------------------------------------------------------------- Layout -- */
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.container-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.page-section {
+  padding: var(--band) 0;
+}
+
+.section-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(32px, 5vw, 56px);
+}
+
+/* When the head is the whole section (a page banner, a confirmation screen)
+   its trailing margin is just dead space. */
+.section-head:last-child {
+  margin-bottom: 0;
+}
+
+.section-head h1,
+.section-head h2 {
+  margin-bottom: 14px;
+}
+
+.section-title {
+  text-align: center;
+}
+
+.section-subtitle {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 1.02rem;
+}
+
+.band-paper {
+  background: var(--paper-dim);
+}
+
+.band-blue {
+  background: linear-gradient(170deg, var(--yale-blue) 0%, var(--yale-blue-deep) 100%);
+  color: var(--white);
+}
+
+.band-blue h1,
+.band-blue h2,
+.band-blue h3 {
+  color: var(--white);
+}
+
+.band-blue p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ------------------------------------------------- Scroll reveal (motion) */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------- Hero (home) -- */
+
+.hero-cinematic {
+  position: relative;
+  min-height: min(92svh, 860px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--yale-blue-deep);
+  color: var(--white);
+  isolation: isolate;
+}
+
+/* The "panoramic sweep": a tiled wall of real catalogue photography that
+   drifts and scales slowly behind the headline. Motion without video. */
+.hero-wall {
+  position: absolute;
+  inset: -8%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  z-index: -2;
+  animation: hero-drift 46s ease-in-out infinite alternate;
+}
+
+.hero-wall-col {
+  display: grid;
+  gap: 10px;
+  grid-auto-rows: 1fr;
+}
+
+.hero-wall img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* A touch of blur pushes the wall behind the type — it should read as
+     atmosphere, not as a contact sheet competing with the headline. */
+  filter: grayscale(0.35) contrast(1.05) blur(2px);
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.06) translate3d(-1.5%, -1%, 0);
+  }
+  to {
+    transform: scale(1.18) translate3d(1.5%, 1%, 0);
+  }
+}
+
+/* Two overlays: a blue duotone wash so product photos read as one image,
+   and a vertical gradient so the type always has contrast. */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to bottom, rgba(0, 21, 44, 0.55) 0%, rgba(0, 21, 44, 0.78) 55%, rgba(0, 21, 44, 0.96) 100%),
+    linear-gradient(120deg, rgba(0, 53, 107, 0.82), rgba(0, 21, 44, 0.7));
+}
+
+.hero-inner {
+  position: relative;
+  width: 100%;
+  padding: clamp(96px, 14vh, 160px) 0 clamp(64px, 9vh, 110px);
+  text-align: center;
+}
+
+.hero-crest {
+  width: clamp(76px, 9vw, 104px);
+  height: auto;
+  margin: 0 auto 22px;
+  display: block;
+}
+
+.hero-cinematic h1 {
+  color: var(--white);
+  max-width: 16ch;
+  margin-inline: auto;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
+}
+
+.hero-cinematic .eyebrow {
+  color: var(--brass-light);
+}
+
+.hero-lede {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 54ch;
+  margin: 18px auto 0;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+/* Segment entry points, styled as heritage pennant tabs. */
+.pill-row {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 44px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 28px;
+}
+
+.pill {
+  font-family: var(--font-label);
+  font-size: 0.74rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+  padding: 10px 26px;
+  text-decoration: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  transition: color 0.25s var(--ease-out);
+  position: relative;
+}
+
+.pill:last-child {
+  border-right: none;
+}
+
+.pill::after {
+  content: '';
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 2px;
+  height: 1px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease-out);
+}
+
+.pill:hover {
+  color: var(--white);
+}
+
+.pill:hover::after {
+  transform: scaleX(1);
+}
+
+.pill-row-hint {
+  text-align: center;
+  margin: 16px 0 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  letter-spacing: var(--track-xwide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-scroll-cue::after {
+  content: '';
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(to bottom, var(--brass), transparent);
+  animation: cue-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes cue-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+/* ------------------------------------------------------------- Marquee -- */
+
+/* Horizontal panoramic sweep of the catalogue — the retail equivalent of the
+   club site's rolling video band. Duplicated track = seamless loop. */
+.marquee {
+  overflow: hidden;
+  padding: 34px 0;
+  background: var(--yale-blue-deep);
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.marquee::before,
+.marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(60px, 10vw, 160px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee::before {
+  left: 0;
+  background: linear-gradient(to right, var(--yale-blue-deep), transparent);
+}
+
+.marquee::after {
+  right: 0;
+  background: linear-gradient(to left, var(--yale-blue-deep), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: marquee-slide 60s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-item {
+  width: clamp(150px, 15vw, 212px);
+  aspect-ratio: 4 / 5;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: block;
+}
+
+.marquee-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85);
+  transition: transform 0.7s var(--ease-out), filter 0.5s var(--ease-out);
+}
+
+.marquee-item:hover img {
+  transform: scale(1.07);
+  filter: saturate(1.1);
+}
+
+.marquee-band {
+  background: var(--yale-blue-deep);
+  padding-top: 30px;
+}
+
+.marquee-caption {
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  letter-spacing: var(--track-xwide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 22px;
+}
+
+/* ------------------------------------------------------ Editorial bands -- */
+
+/* Alternating offset panels, echoing the club site's staggered -50px layout. */
+.editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+
+/* Flip which side the visual sits on so consecutive bands alternate. */
+.editorial-reverse > :first-child {
+  order: 2;
+}
+
+.editorial-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--yale-blue-light);
+  box-shadow: var(--shadow-md);
+}
+
+.editorial-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.editorial:hover .editorial-media img {
+  transform: scale(1.05);
+}
+
+/* A brass hairline frame inset from the image edge — J.Press framing cue. */
+.editorial-media::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.editorial-body h2 {
+  margin-bottom: 18px;
+}
+
+.editorial-body p {
+  font-size: 1.04rem;
+  max-width: 46ch;
+}
+
+.editorial-stats {
+  display: flex;
+  gap: clamp(24px, 4vw, 48px);
+  margin: 28px 0;
+  flex-wrap: wrap;
+}
+
+.editorial-stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--burgundy);
+  line-height: 1;
+}
+
+.editorial-stat span {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Handsome Dan's portrait. The source is a 3:4 full-body shot of the dog in a
+   Yale sweater; `object-fit: cover` lets the same file serve a tall editorial
+   panel and a 32px round avatar. */
+.dan-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scaled up about his head, because the full-body framing is unreadable once
+   it's down to chat-avatar size. The origin is the dog's face in the source. */
+.dan-photo-crop {
+  transform-origin: 57% 54%;
+  transform: scale(3.1);
+}
+
+.dan-avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  border: 1px solid var(--brass);
+}
+
+.dan-panel {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+}
+
+/* A slow push-in, so the panel still has the movement the vector mascot used
+   to carry with its ear flick. */
+.dan-panel .dan-photo {
+  animation: dan-push 26s var(--ease-out) infinite alternate;
+}
+
+@keyframes dan-push {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.band-blue .dan-prompt {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--brass-light);
+  border-left: 2px solid var(--brass);
+  padding-left: 18px;
+  margin-top: 24px;
+}
+
+/* ------------------------------------------- Segment cards (home bands) -- */
+
+.segment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 28px);
+}
+
+.segment-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--yale-blue-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.segment-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.5) brightness(0.72);
+  transition: transform 1.1s var(--ease-out), filter 0.7s var(--ease-out);
+}
+
+.segment-card:hover img {
+  transform: scale(1.08);
+  filter: grayscale(0) brightness(0.62);
+}
+
+.segment-card-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: clamp(20px, 2.5vw, 32px);
+  background: linear-gradient(to top, rgba(0, 21, 44, 0.92), transparent);
+  z-index: 1;
+}
+
+.segment-card-body h3 {
+  font-family: var(--font-display);
+  color: var(--white);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  margin-bottom: 6px;
+}
+
+.segment-card-body p {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.88rem;
+  margin: 0 0 14px;
+  font-weight: 300;
+}
+
+.segment-card-cta {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--brass-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.segment-card-cta::after {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.35s var(--ease-out);
+}
+
+.segment-card:hover .segment-card-cta::after {
+  width: 42px;
+}
+
+/* ------------------------------------------------------- Product cards -- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: clamp(20px, 2.6vw, 38px) clamp(16px, 2vw, 28px);
+}
+
+.card {
+  display: block;
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+.card-media {
+  background: var(--white);
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.card:hover .card-media {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease-out);
+}
+
+.card:hover .card-image {
+  transform: scale(1.06);
+}
+
+.card-body {
+  padding: 16px 2px 0;
+}
+
+.card-body h3 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.98rem;
+  color: var(--ink);
+  letter-spacing: 0;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.card:hover .card-body h3 {
+  color: var(--burgundy);
+}
+
+.card-description {
+  font-size: 0.84rem;
+  font-weight: 300;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.card-price {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  color: var(--yale-blue);
+}
+
+/* Garment type, as a quiet overline rather than a loud pill. */
+.badge {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+/* ------------------------------------------------------- Segment filter -- */
+
+.segment-bar {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  border-block: 1px solid var(--line);
+}
+
+.segment-chip {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  font-size: 0.72rem;
+  padding: 16px 26px;
+  position: relative;
+}
+
+.segment-chip:last-child {
+  border-right: none;
+}
+
+.segment-chip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--burgundy);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease-out);
+}
+
+.segment-chip:hover {
+  color: var(--yale-blue);
+}
+
+.segment-chip.is-active {
+  color: var(--yale-blue);
+}
+
+.segment-chip.is-active::after {
+  transform: scaleX(1);
+}
+
+.result-count {
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 22px 0 34px;
+}
+
+/* -------------------------------------------------------- Product page -- */
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(32px, 5vw, 76px);
+  align-items: start;
+}
+
+.product-detail-media {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.product-detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-detail-info {
+  position: sticky;
+  top: 108px;
+}
+
+.product-detail-info h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin-bottom: 10px;
+}
+
+.product-detail-price {
+  font-family: var(--font-label);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  color: var(--burgundy);
+  display: block;
+  margin-bottom: 22px;
+}
+
+.product-detail-info > p {
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 48ch;
+}
+
+.spec-block {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 26px;
+}
+
+.spec-label {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swatch {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  border: 1px solid var(--line);
+  padding: 7px 14px;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.size-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-pill {
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  padding: 11px 18px;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  color: var(--ink);
+  min-width: 56px;
+  text-align: center;
+}
+
+.size-pill.in-stock {
+  border-color: var(--yale-blue);
+  color: var(--yale-blue);
+}
+
+.size-pill.out-of-stock {
+  color: var(--line-strong);
+  border-color: var(--line);
+  background: var(--paper-dim);
+  text-decoration: line-through;
+}
+
+.size-note {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.back-link {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 26px;
+}
+
+.back-link:hover {
+  color: var(--burgundy);
+}
+
+/* --------------------------------------------------------------- Forms -- */
+
+.form-card {
+  max-width: 440px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: clamp(28px, 4vw, 44px);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.form-field label {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-field input {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease-out);
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--yale-blue);
+  box-shadow: 0 0 0 3px rgba(0, 53, 107, 0.1);
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.88rem;
+  margin-bottom: 14px;
+}
+
+.form-footnote {
+  text-align: center;
+  font-size: 0.88rem;
+  margin: 16px 0 0;
+}
+
+/* -------------------------------------------------------------- Footer -- */
+
+.site-footer {
+  background: var(--yale-blue-deep);
+  color: rgba(255, 255, 255, 0.6);
+  padding: clamp(44px, 6vw, 72px) 0 32px;
+  margin-top: auto;
+}
+
+.site-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.site-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--white);
+}
+
+.site-footer-brand svg {
+  width: 36px;
+  height: auto;
+}
+
+.site-footer-motto {
+  font-family: var(--font-label);
+  font-size: 0.66rem;
+  letter-spacing: var(--track-xwide);
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 10px 0 0;
+}
+
+.site-footer-links {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.site-footer-links a {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
+
+.site-footer-links a:hover {
+  color: var(--brass-light);
+}
+
+.site-footer-legal {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 32px;
+  padding-top: 20px;
+  font-size: 0.76rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ------------------------------------------------------- Chat (Dan) ----- */
+
+.chat-toggle {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--burgundy);
+  color: var(--brass-light);
+  border: 1px solid var(--burgundy-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  padding: 0;
+  /* Dan's photo fills the button edge to edge, so it has to be clipped to the
+     circle; the burgundy survives only as a ring behind the border. */
+  overflow: hidden;
+}
+
+.chat-toggle svg {
+  width: 30px;
+  height: 30px;
+}
+
+.chat-toggle:hover {
+  background: var(--burgundy-dark);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.chat-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 26px;
+  width: 356px;
+  max-width: calc(100vw - 32px);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  overflow: hidden;
+  animation: chat-in 0.4s var(--ease-out);
+}
+
+@keyframes chat-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}
+
+.chat-panel-header {
+  background: var(--yale-blue-deep);
+  color: var(--white);
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.chat-panel-header svg {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--brass-light);
+}
+
+.chat-panel-header .dan-avatar {
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+.chat-panel-subtitle {
+  display: block;
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-top: 2px;
+}
+
+.chat-panel-body {
+  padding: 18px;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.chat-message {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 11px 14px;
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.55;
+  max-width: 88%;
+  white-space: pre-wrap;
+}
+
+.chat-message-user {
+  background: var(--yale-blue);
+  border-color: var(--yale-blue);
+  color: var(--white);
+  align-self: flex-end;
+}
+
+.chat-message-pending {
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.chat-message:has(.chat-product-cards) {
+  max-width: 100%;
+}
+
+.chat-product-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chat-product-card {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 8px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+}
+
+.chat-product-card:hover {
+  border-color: var(--burgundy);
+  background: var(--white);
+}
+
+.chat-product-card img {
+  width: 54px;
+  height: 66px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+
+.chat-product-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chat-product-card-name {
+  font-weight: 500;
+  font-size: 0.83rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.chat-product-card-price {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--burgundy);
+}
+
+.chat-product-card-desc {
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chat-product-card-oos {
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  letter-spacing: var(--track-wide);
+  color: var(--danger);
+  text-transform: uppercase;
+}
+
+.chat-panel-footer {
+  padding: 0 18px 18px;
+}
+
+.chat-session-note {
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.chat-session-note a {
+  color: var(--burgundy);
+  font-weight: 500;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input-row input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  padding: 11px 13px;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+}
+
+.chat-input-row input:focus {
+  outline: none;
+  border-color: var(--yale-blue);
+}
+
+.chat-input-row button {
+  padding: 11px 18px;
+  font-size: 0.7rem;
+}
+
+/* --------------------------------------------------------- Responsive -- */
+
+@media (max-width: 1000px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-info {
+    position: static;
+  }
+
+  .segment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-reverse .editorial-media {
+    order: 0;
+  }
+
+  .hero-wall {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pill-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .pill {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+  }
+
+  .pill:last-child {
+    border-bottom: none;
+  }
+
+  .segment-bar {
+    flex-direction: column;
+  }
+
+  .segment-chip {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* Honour the OS "reduce motion" setting — kill drift, marquee, and reveals. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-wall,
+  .marquee-track,
+  .hero-scroll-cue::after,
+  .chat-panel,
+  .dan-panel .dan-photo {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

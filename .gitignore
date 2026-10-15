@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# This repository publishes hw4 ONLY.
+#
+# The working folder also contains hw1, hw2 and my-app, which are not part of
+# this submission and must not be published. Rather than listing them (a new
+# folder would silently escape that list), everything at the repo root is
+# ignored by default and hw4 is explicitly allowed back in. A folder added here
+# later is excluded until someone deliberately un-ignores it.
+# ---------------------------------------------------------------------------
+/*
+!/.gitignore
+!/hw4/
+
+# Belt-and-braces: these must never be committed from anywhere in the tree,
+# even if a future allowlist entry would otherwise let them through.
+# hw4/.gitignore repeats these for anyone who clones hw4 on its own.
+**/data/
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.local
+**/.env
+**/.session_secret
+**/.venv/
+**/node_modules/
+**/dist/
+.DS_Store

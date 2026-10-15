@@ -1,0 +1,50 @@
+# ---------------------------------------------------------------------------
+# Local-only data pack — NEVER commit.
+#
+# The app expects hw4/data/ to contain:
+#   data/campus_customs.db       the catalogue, inventory, users and chat tables
+#   data/products/               102 product photographs referenced by the catalogue
+#   data/Handsome Dan.jpeg       the mascot portrait
+#
+# The database holds real email addresses and salted password hashes, and the
+# images are course-supplied assets. Neither belongs on a public repo, so the
+# whole folder is excluded and a fresh clone must be given it separately.
+# See README.md -> "The local-only data pack".
+# ---------------------------------------------------------------------------
+data/
+
+# Any stray SQLite database anywhere in the tree, whatever it is called.
+# Belt-and-braces: the rule above only covers data/, and a copy of the db has
+# turned up at the hw4 root before.
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets
+.env
+.env.local
+.env.*.local
+# (.env.example IS committed — it holds placeholders only)
+!.env.example
+
+# HMAC key for chat session tokens, generated on first run by backend/security.py
+.session_secret
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Scratch
+__bash_probe.txt

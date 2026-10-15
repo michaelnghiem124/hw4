@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+pydantic[email]
+pydantic-ai-slim[anthropic]>=1.0.0
+python-dotenv

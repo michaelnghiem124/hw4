@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Campus Customs — Live App Check (Problem 11)</title>
+    <style>
+      :root {
+        --yale-blue: #00356b;
+        --yale-blue-deep: #00152c;
+        --burgundy: #56112a;
+        --brass: #c8a951;
+        --paper: #faf8f3;
+        --ink: #1a1a1a;
+        --muted: #5c5c5c;
+        --line: #ddd8cc;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 16px/1.65 "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      header.masthead {
+        background: var(--yale-blue-deep);
+        color: #fff;
+        padding: 44px 32px 38px;
+        border-bottom: 3px solid var(--brass);
+      }
+      .wrap { max-width: 1040px; margin: 0 auto; }
+      .eyebrow {
+        font-family: "Oswald", "Helvetica Neue", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        font-size: 12px;
+        color: var(--brass);
+        margin: 0 0 10px;
+      }
+      h1 {
+        font-family: "Bodoni Moda", "Didot", Georgia, serif;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 1.1;
+        margin: 0 0 14px;
+      }
+      header.masthead p { margin: 0; color: #cfd8e4; max-width: 70ch; }
+      main { padding: 0 32px 72px; }
+      section.check {
+        border-top: 1px solid var(--line);
+        padding: 46px 0 8px;
+      }
+      h2 {
+        font-family: "Bodoni Moda", "Didot", Georgia, serif;
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0 0 6px;
+        color: var(--yale-blue);
+      }
+      h2 .num {
+        font-family: "Oswald", "Helvetica Neue", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.2em;
+        color: var(--burgundy);
+        display: block;
+        margin-bottom: 8px;
+      }
+      h3 {
+        font-family: "Oswald", "Helvetica Neue", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 12.5px;
+        color: var(--muted);
+        margin: 30px 0 10px;
+        font-weight: 500;
+      }
+      p { max-width: 78ch; }
+      .asked {
+        border-left: 3px solid var(--brass);
+        padding: 6px 0 6px 16px;
+        margin: 18px 0;
+        font-style: italic;
+        color: var(--yale-blue);
+        max-width: 78ch;
+      }
+      figure {
+        margin: 0 0 10px;
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 12px;
+      }
+      figure img { display: block; width: 100%; height: auto; }
+      figcaption {
+        font-size: 14px;
+        color: var(--muted);
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+        margin-top: 12px;
+      }
+      .shots {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 22px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .shots { grid-template-columns: 1fr; }
+      }
+      .proves {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--burgundy);
+        padding: 16px 20px;
+        margin: 22px 0 0;
+      }
+      .proves strong {
+        font-family: "Oswald", "Helvetica Neue", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 12px;
+        color: var(--burgundy);
+        display: block;
+        margin-bottom: 6px;
+      }
+      .proves p { margin: 0; }
+      table {
+        border-collapse: collapse;
+        margin: 14px 0 0;
+        font-size: 14.5px;
+      }
+      th, td {
+        border: 1px solid var(--line);
+        padding: 7px 16px;
+        text-align: left;
+        background: #fff;
+      }
+      th {
+        font-family: "Oswald", "Helvetica Neue", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 11.5px;
+        font-weight: 500;
+        background: #f2efe6;
+        color: var(--yale-blue);
+      }
+      td.out { color: var(--burgundy); font-weight: 600; }
+      code {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 0.9em;
+        background: #efece2;
+        padding: 1px 5px;
+      }
+      footer {
+        border-top: 3px solid var(--brass);
+        background: var(--yale-blue-deep);
+        color: #cfd8e4;
+        padding: 30px 32px 40px;
+        font-size: 14px;
+      }
+      footer h3 { color: var(--brass); margin-top: 0; }
+      footer code { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="wrap">
+        <p class="eyebrow">Campus Customs · Problem 11</p>
+        <h1>Live App Check</h1>
+        <p>
+          Three checks run against the running application — React front end on
+          <code>localhost:5174</code>, FastAPI back end on <code>localhost:8000</code>, Handsome
+          Dan answering through PydanticAI over the real <code>campus_customs.db</code>. Every
+          screenshot below was captured from that live site by a scripted browser session, not
+          mocked up or edited.
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- ================= CHECK 1 ================= -->
+      <section class="check">
+        <h2><span class="num">Check 1</span>The chat reports a real inventory level</h2>
+        <p>
+          On the <em>Boola Boola T Shirt</em> page, the chat was asked about stock and price. The
+          agent has no stock figures in its prompt — it has to call the inventory tool, which
+          queries the database at the moment of the question.
+        </p>
+
+        <p class="asked">
+          “What sizes of this shirt are in stock right now, and what does it cost?”
+        </p>
+
+        <div class="shots">
+          <figure>
+            <img
+              src="app_check_images/inventory_chat.png"
+              alt="Chat panel: Handsome Dan answers that the Boola Boola T-Shirt is $32, XL has only 2 left, and L is sold out, followed by a product card"
+            />
+            <figcaption>The reply, close up.</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="app_check_images/inventory_full.png"
+              alt="Full product page for the Boola Boola T Shirt with the chat panel open over it"
+            />
+            <figcaption>
+              The same moment in context — the chat floats over the product page, and the page
+              itself is already showing <strong>$32.00</strong> and a struck-through
+              <strong>L</strong> in its size row.
+            </figcaption>
+          </figure>
+        </div>
+
+        <h3>What the database actually holds</h3>
+        <table>
+          <tr>
+            <th>Size</th><th>XS</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>XXL</th>
+          </tr>
+          <tr>
+            <td>Quantity</td><td>12</td><td>12</td><td>15</td>
+            <td class="out">0</td><td class="out">2</td><td>20</td>
+          </tr>
+        </table>
+        <p style="font-size: 14px; color: var(--muted)">
+          From <code>SELECT size, quantity FROM inventory WHERE product_id =
+          'boola-boola-t-shirt'</code>; price <code>32.0</code> from <code>catalogue</code>.
+        </p>
+
+        <h3>And the page tells the same story</h3>
+        <figure>
+          <img
+            src="app_check_images/inventory_product_page.png"
+            alt="Boola Boola T Shirt detail page: price $32.00, size pills with L struck through, and a note reading one size is sold out"
+          />
+          <figcaption>
+            The product page on its own, before the chat is opened — <strong>$32.00</strong>, the
+            <strong>L</strong> pill struck through, and the note “1 size is sold out — struck
+            through above. Ask Handsome Dan in the chat for exact counts.” Page and chat read the
+            same database, so they cannot disagree.
+          </figcaption>
+        </figure>
+
+        <div class="proves">
+          <strong>What this proves</strong>
+          <p>
+            The answer matches the database row for row: $32, XL flagged as “down to only 2 left,”
+            and L reported sold out. The agent volunteered the two unflattering facts rather than
+            claiming everything was available, which is the honesty behaviour the stock tool was
+            built to enforce.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= CHECK 2 ================= -->
+      <section class="check">
+        <h2><span class="num">Check 2</span>A category question returns dynamic product cards</h2>
+        <p>
+          Asked from the home page, with no product in context, so the agent has to run a catalogue
+          search and hand the results to the front end as structured data.
+        </p>
+
+        <p class="asked">“Do you have any hoodies?”</p>
+
+        <div class="shots">
+          <figure>
+            <img
+              src="app_check_images/search_cards.png"
+              alt="Chat panel showing a sentence of prose followed by product cards for Basic Hoodie Big Yale at $68 and Brooks Brothers Double Knit Full Zip Hoodie Yale at $88"
+            />
+            <figcaption>
+              One line of prose, then clickable cards — image, name and live price each.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="app_check_images/search_cards_full.png"
+              alt="Home page with the chat panel open in the lower right showing hoodie result cards"
+            />
+            <figcaption>
+              The panel over the home page. <strong>Five</strong> cards were rendered for this
+              question (counted in the DOM at capture time).
+            </figcaption>
+          </figure>
+        </div>
+
+        <h3>Spot-check against the catalogue</h3>
+        <table>
+          <tr><th>Card</th><th>Price shown</th><th>Price in DB</th></tr>
+          <tr><td>Basic Hoodie Big Yale</td><td>$68.00</td><td>68.0</td></tr>
+          <tr>
+            <td>Brooks Brothers Double Knit Full Zip Hoodie Yale</td>
+            <td>$88.00</td><td>88.0</td>
+          </tr>
+          <tr><td>Champion Reverse Weave Hoodie 1</td><td>$68.00</td><td>68.0</td></tr>
+          <tr><td>Crew Left Chest Hoodie</td><td>$68.00</td><td>68.0</td></tr>
+        </table>
+
+        <div class="proves">
+          <strong>What this proves</strong>
+          <p>
+            The cards are generated at request time from search results, not written into the
+            reply text — the agent returns product IDs and the widget renders the image, name and
+            price from the catalogue, so every price on a card is correct by construction. The
+            prose stays to a single sentence because the cards carry the detail.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= CHECK 3 ================= -->
+      <section class="check">
+        <h2><span class="num">Check 3</span>Usability feature — audience segments</h2>
+        <p>
+          Problem 9 added three audience entry points — <em>Students</em>, <em>Alumni</em> and
+          <em>Family &amp; Relatives</em> — so a visitor who doesn’t know what a “quarter-zip” is
+          can still start from who they are. The pills sit under the home hero; each one opens a
+          pre-filtered collection.
+        </p>
+
+        <div class="shots">
+          <figure>
+            <img
+              src="app_check_images/usability_home_pills.png"
+              alt="Home page hero with Students, Alumni and Family and Relatives pills below the call to action"
+            />
+            <figcaption>The three segment pills on the home page.</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="app_check_images/usability_family_collection.png"
+              alt="Products page filtered to the Family and Relatives segment, showing a headline, explanatory blurb and 16 items"
+            />
+            <figcaption>
+              After clicking <em>Family &amp; Relatives</em>: <code>/products?segment=family</code>.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="proves">
+          <strong>What this proves</strong>
+          <p>
+            The click lands on a genuinely narrowed page, not the full catalogue with a label on
+            it: the heading changes to “For Family &amp; Relatives,” a sentence explains what was
+            selected and why, the segment is marked active in the filter bar, and the count reads
+            <strong>16 items</strong> out of 102 — matching the 16 rows the API returns for that
+            segment. The crowd of 102 products becomes a browsable handful in one click.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <h3>How these were captured</h3>
+        <p>
+          A <code>puppeteer-core</code> script drove the installed copy of Chrome against the
+          running dev server at 1280×900, twice the device pixel ratio, with
+          <code>prefers-reduced-motion</code> emulated so the site’s hero drift, marquee and
+          scroll-reveal animations settle before each frame. The script navigates, opens the chat,
+          types each question with real key events, waits for the reply to finish streaming, and
+          writes the PNGs into <code>app_check_images/</code>. Nothing here was staged by hand —
+          re-running it against the live site reproduces every image.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

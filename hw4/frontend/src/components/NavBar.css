@@ -1,0 +1,201 @@
+/* Header — a J.Press-style two-tier masthead: a thin service rail above a
+   generous brand bar. Over the home hero it starts transparent so the
+   photography runs edge to edge; it solidifies the moment you scroll. */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
+  background: var(--yale-blue-deep);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* On the home page the header floats over the hero until the user scrolls.
+   It still carries a soft top-down scrim — without one the wordmark sits on
+   whatever product photo happens to be tiled behind it and stops being legible. */
+.site-header.is-transparent {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 21, 44, 0.78) 0%,
+    rgba(0, 21, 44, 0.45) 55%,
+    transparent 100%
+  );
+  border-bottom-color: transparent;
+}
+
+.site-header.is-scrolled {
+  background: rgba(0, 21, 44, 0.94);
+  backdrop-filter: saturate(1.4) blur(10px);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.28);
+}
+
+.header-rail {
+  background: var(--burgundy);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-label);
+  font-size: 0.64rem;
+  letter-spacing: var(--track-xwide);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 7px 16px;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.site-header.is-scrolled .header-rail {
+  display: none;
+}
+
+.navbar-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 76px;
+  transition: height 0.4s var(--ease-out);
+}
+
+.site-header.is-scrolled .navbar-inner {
+  height: 62px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.navbar-brand svg {
+  width: 30px;
+  height: auto;
+  color: var(--brass);
+  flex-shrink: 0;
+  transition: width 0.4s var(--ease-out);
+}
+
+.site-header.is-scrolled .navbar-brand svg {
+  width: 24px;
+}
+
+.navbar-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.28rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+.navbar-tagline {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 0.56rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-top: 4px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 30px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 0.76rem;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  padding: 6px 0;
+  transition: color 0.25s var(--ease-out);
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: var(--white);
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  transform: scaleX(1);
+}
+
+/* The account actions sit apart from navigation — they're a different job. */
+.navbar-links .nav-account {
+  color: var(--brass-light);
+}
+
+.navbar-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 1.3rem;
+  padding: 6px 2px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 860px) {
+  .navbar-toggle {
+    display: inline-flex;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--yale-blue-deep);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 10px 24px 22px;
+    display: none;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .navbar-links a {
+    display: block;
+    padding: 14px 0;
+  }
+
+  .header-rail {
+    font-size: 0.56rem;
+    letter-spacing: 0.2em;
+  }
+}
